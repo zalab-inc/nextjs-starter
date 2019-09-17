@@ -4,6 +4,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { ThemeProvider } from 'styled-components';
 import NProgress from 'nprogress';
 import Router from 'next/router';
+import { DefaultSeo } from 'next-seo';
 import withApolloClient from '../utils/apollo/with-apollo-client';
 import css from '../styles/styles.scss';
 
@@ -34,6 +35,20 @@ class MyApp extends App {
     const { Component, pageProps, apolloClient } = this.props
     return (
       <>
+        <DefaultSeo
+          title="Application"
+          openGraph={{
+            type: 'website',
+            locale: 'en_IE',
+            url: 'https://www.url.ie/',
+            site_name: 'SiteName',
+          }}
+          twitter={{
+            handle: '@handle',
+            site: '@site',
+            cardType: 'summary_large_image',
+          }}
+        />
         <ApolloProvider client={apolloClient}>
           <ThemeProvider theme={theme}>
             <Component {...pageProps} />

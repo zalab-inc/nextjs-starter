@@ -1,20 +1,32 @@
-// body {
-//   background-color: red;
-// }
 
 // @import "~bootstrap/scss/functions";
 // @import "~bootstrap/scss/variables";
 // @import "~bootstrap/scss/mixins/_breakpoints";
 // @import "~bootstrap/scss/bootstrap";
 
+// bootstrap
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/_breakpoints";
 @import "bootstrap/scss/bootstrap";
 
-@import "styles/tachyons/css/tachyons";
+
+// libs
+@import "~tachyons/css/tachyons.css";
 @import "~nprogress/nprogress";
 
-.box {
-  color: red;
+// fonts
+// get-google-fonts -i "https://fonts.googleapis.com/css?family=Roboto:400,700&subset=cyrillic"
+@import "fonts/roboto/fonts.css";
+@import "fonts/montserrat/fonts.css";
+.roboto {
+  font-family: 'Roboto' !important;
+  color: #000;
+  font-size: 50px;
+}
+.montserrat {
+  font-family: 'Montserrat';
+  color: #000;
+  font-size: 50px;
+  font-weight: bold;
 }

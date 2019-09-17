@@ -1,50 +1,44 @@
-const nextComposePlugins = require('next-compose-plugins');
-// const nextCss = require('@zeit/next-css')
-const nextSass = require('@zeit/next-sass')
-const optimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const { withPlugins, optional } = require('next-compose-plugins');
+const sass = require('@zeit/next-sass');
+const optimize = require("optimize-css-assets-webpack-plugin");
+const images = require('next-images');
+const purgecss = require('next-purgecss');
+const fonts = require('next-fonts');
+const size = require('next-size');
 
+const {
+  PHASE_PRODUCTION_BUILD,
+  PHASE_PRODUCTION_SERVER,
+  PHASE_DEVELOPMENT_SERVER,
+  PHASE_EXPORT,
+} = require('next-server/constants');
 
-// const withCss = nextCss();
-const withSass = nextSass({
-  webpack(config, options) {
-    // config.module.rules.push({
-    //   test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
-    //   use: {
-    //     loader: 'url-loader',
-    //     options: {
-    //       limit: 1000000
-    //     }
-    //   }
-    // });
-    // config.module.rules.push({
-    //   test: /\.(png|jpe?g|gif)$/i,
-    //   loader: 'file-loader',
-    //   options: {
-    //     name: '[path][name].[ext]',
-    //   },
-    // });
-
-    if (config.mode === 'production') {
-      if (Array.isArray(config.optimization.minimizer)) {
-        config.optimization.minimizer.push(
-          new optimizeCssAssetsPlugin({})
-        )
-      }
-    }
-
-    return config;
-  }
-});
-
-const nextConfig = {
+const config =  {
   distDir: '.next',
   poweredByHeader: false,
 }
 
-module.exports = nextComposePlugins(
+// [plugin: function, configuration?: object, phases?: array]
+module.exports = withPlugins(
   [
-    // withCss,
-    withSass,
+    // with sass
+    [
+      sass,
+      {
+        sassLoaderOptions: {
+          outputStyle: 'expanded',
+        },
+        [PHASE_PRODUCTION_BUILD]: {
+          sassLoaderOptions: {
+            outputStyle: 'compressed',
+          },
+        }
+      }
+    ],
+    [purgecss, {}, [PHASE_PRODUCTION_BUILD]],
+    images,
+    fonts,
+    size,
   ],
-  nextConfig
+  config
 ) 
