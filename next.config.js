@@ -4,7 +4,7 @@ const optimize = require("optimize-css-assets-webpack-plugin");
 const images = require('next-images');
 const purgecss = require('next-purgecss');
 const fonts = require('next-fonts');
-const size = require('next-size');
+// const size = require('next-size');
 
 const {
   PHASE_PRODUCTION_BUILD,
@@ -38,7 +38,7 @@ module.exports = withPlugins(
     [purgecss, {}, [PHASE_PRODUCTION_BUILD]],
     images,
     fonts,
-    size,
+    // size,
   ],
   config
 ) 
